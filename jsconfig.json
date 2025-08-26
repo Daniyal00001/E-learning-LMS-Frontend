@@ -1,0 +1,17 @@
+{
+      "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
+
+
+// when ever you write  @/...  → wo src/... folder ke andar map ho jayega.
+
+// import Button from "../../components/ui/Button"
+
+// but now 
+
+// import Button from "@/components/ui/Button"
