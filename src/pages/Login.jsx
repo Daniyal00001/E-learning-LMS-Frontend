@@ -1,7 +1,9 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
-
+import { useLoginMutation, useSignupMutation } from "../features/api/authApi";
+import toast from "react-hot-toast";
+import { useEffect } from "react";
 
 
 export default function Login() {
@@ -12,15 +14,49 @@ export default function Login() {
  const [signup , setsignup ] = useState ({ name : "", email : "",  password : ""});
 
 
+{/* +++++++++++++++++++++++++++++++++++ RTK Mutations ++++++++++++++++++++++++++++++++++++ */}
+
+ const [loginUser , { data : loginData , isLoading: isLoginLoading , error: loginError , isSuccess: isLoginSuccess }] = useLoginMutation();
+ const [signupUser , {data: signupData , isLoading: isSignupLoading , error: signupError , isSuccess: isSignupSuccess }] = useSignupMutation();
+
 {/* +++++++++++++++++++++++++++++++++++  Handle Registrartion (login / signup) ++++++++++++++++++++++++++++++++++++ */}
 
- const handleRegistration = (e,type)=>{
+ const handleRegistration = async (e,type)=>{
     e.preventDefault();
     const InputData = type === "login" ? login : signup;
-    console.log(InputData);
+    const action = type === "login" ? loginUser : signupUser;
+    await action(InputData);
+    // basically we have to call loginUser mutation or signupUser mutation , here we store in action variable
  }
         
+{/* +++++++++++++++++++++++++++++++++++  Show toast notifications ++++++++++++++++++++++++++++++++++ */}
 
+// ✅ LOGIN toasts
+useEffect(() => {
+  if (isLoginSuccess && loginData?.token) {
+    localStorage.setItem("token", loginData.token);
+    toast.success(loginData?.message || "Login successful!");
+  }
+
+  if (loginError) {
+    const errMsg =
+      loginError?.data?.error || loginError?.data?.message || "Login failed!";
+    toast.error(errMsg);
+  }
+}, [isLoginSuccess, loginError, loginData]);
+
+// ✅ SIGNUP toasts
+useEffect(() => {
+  if (isSignupSuccess && signupData) {
+    toast.success(signupData?.message || "Signup successful!");
+  }
+
+  if (signupError) {
+    const errMsg =
+      signupError?.data?.error || signupError?.data?.message || "Signup failed!";
+    toast.error(errMsg);
+  }
+}, [isSignupSuccess, signupError, signupData]);
 
 
   return (
@@ -63,9 +99,12 @@ export default function Login() {
               />
               <button
                 type="submit"
+                disabled={isLoginLoading}
                 className="bg-blue-500 text-white rounded py-2 mt-2 hover:bg-blue-600"
               >
-                Login
+                {
+                  isLoginLoading ? "Logging In..." : "Login"
+                }
               </button>
             </form>
           </TabsContent>
@@ -105,10 +144,13 @@ export default function Login() {
                 onChange={(e) => setsignup({ ...signup, password: e.target.value })}
               />
               <button
+                disabled={isSignupLoading}
                 type="submit"
                 className="bg-green-500 text-white rounded py-2 mt-2 hover:bg-green-600"
               >
-                Sign Up
+              {
+                isSignupLoading ? "Signing Up..." : "Sign Up"
+              }
               </button>
             </form>
           </TabsContent>
