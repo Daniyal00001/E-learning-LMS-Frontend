@@ -26,7 +26,7 @@ export default function Login() {
     const InputData = type === "login" ? login : signup;
     const action = type === "login" ? loginUser : signupUser;
     await action(InputData);
-    // basically we have to call loginUser mutation or signupUser mutation , here we store in action variable
+    // basically we have to call loginUser mutation or signupUser mutation , here we store in action variable..
  }
         
 {/* +++++++++++++++++++++++++++++++++++  Show toast notifications ++++++++++++++++++++++++++++++++++ */}
