@@ -3,7 +3,7 @@ import './App.css'
 import Navbar from './components/ui/navbar';
 import Login from './pages/login'
 import { Toaster } from "react-hot-toast"; 
-import { ThemeProvider } from "@/components/theme-provider"
+import { ThemeProvider } from "@/components/ui/theme-provider"
 
 function App() {
   return (
