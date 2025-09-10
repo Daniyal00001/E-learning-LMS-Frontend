@@ -29,7 +29,7 @@ export default function Navbar() {
   return (
     <>
       {/* Desktop Navbar */}
-      <nav className="w-full bg-gradient-to-r from-black via-gray-900 to-black text-gray-200 shadow-lg backdrop-blur-md">
+     <nav className="hidden md:block w-full bg-gradient-to-r from-black via-gray-900 to-black text-gray-200 shadow-lg backdrop-blur-md">
         <div className="container mx-auto flex items-center justify-between px-6 py-4">
           {/* Navbar Left */}
           <a
@@ -121,7 +121,7 @@ function MobileNavbar() {
   const user = true
 
   return (
-    <div className="lg:hidden flex items-center justify-between px-4 py-3 bg-gradient-to-r from-black via-gray-900 to-black text-gray-200 shadow-md">
+    <div className="md:hidden flex items-center justify-between px-4 py-3 bg-gradient-to-r from-black via-gray-900 to-black text-gray-200 shadow-md">
       {/* Logo */}
       <a
         href="#"
@@ -149,7 +149,7 @@ function MobileNavbar() {
           <SheetHeader>
             <SheetTitle className="text-gray-100">Menu</SheetTitle>
             <SheetDescription className="text-gray-400">
-              Navigate your LMS
+              {/* Navigate your LMS */}
             </SheetDescription>
           </SheetHeader>
 
